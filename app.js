@@ -82,5 +82,5 @@ app.get('/sign-s3', (req, res) => {
  * a way that suits your application.
  */
 app.post('/save-details', (req, res) => {
-  // TODO: Read POSTed form data and do something useful
+    res.send("done");
 });
