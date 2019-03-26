@@ -1,0 +1,268 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>  
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="inputs" id="inputs">
+                <input maxlength="2" id="i1" placeholder="_" value="" />
+                <input maxlength="2" id="i2" placeholder="_" value="" />
+                <input maxlength="2" id="i3" placeholder="_" value="" />
+                <input maxlength="2" id="i4" placeholder="_" value="" />
+                <input maxlength="2" id="i5" placeholder="_" value="" />
+                <input maxlength="1" id="i6" placeholder="_" value="" />
+            </div>
+        </div>
+        </div>
+        <div class="contatiner mt-2">
+            <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
+            <a id="download_link" href="" >Download</a>
+        </div>
+        <footer>
+            <iframe id="my_iframe" style="display:none;"></iframe>
+        </footer>
+</body>
+<script>  
+
+    function processInput(holder) {
+        var elements = holder.children(), //taking the "kids" of the parent
+            str = ""; //unnecesary || added for some future mods
+
+        elements.each(function (e) { //iterates through each element
+            var val = $(this).val().replace(/\D/, ""), //taking the value and parsing it. Returns string without changing the value.
+                focused = $(this).is(":focus"), //checks if the current element in the iteration is focused
+                parseGate = false;
+
+            val.length == 1 ? parseGate = false : parseGate = true;
+			/*a fix that doesn't allow the cursor to jump 
+			to another field even if input was parsed 
+			and nothing was added to the input*/
+
+            $(this).val(val); //applying parsed value.
+
+            if (parseGate && val.length > 1) { //Takes you to another input
+                var exist = elements[e + 1] ? true : false; //checks if there is input ahead
+                exist && val[1] ? ( //if so then
+                    elements[e + 1].disabled = false,
+                    elements[e + 1].value = val[1], //sends the last character to the next input
+                    elements[e].value = val[0], //clears the last character of this input
+                    elements[e + 1].focus() //sends the focus to the next input
+                ) : void 0;
+            } else if (parseGate && focused && val.length == 0) { //if the input was REMOVING the character, then
+                var exist = elements[e - 1] ? true : false; //checks if there is an input before
+                if (exist) elements[e - 1].focus(); //sends the focus back to the previous input
+            }
+
+            val == "" ? str += " " : str += val;
+        });
+    }
+
+    $("#inputs").on('input', function () { processInput($(this)) }); //still wonder how it worked out. But we are adding input listener to the parent... (omg, jquery is so smart...);
+
+    $("#inputs").on('click', function (e) { //making so that if human focuses on the wrong input (not first) it will move the focus to a first empty one.
+        var els = $(this).children(),
+            str = "";
+        els.each(function (e) {
+            var focus = $(this).is(":focus");
+            $this = $(this);
+            while ($this.prev().val() == "") {
+                $this.prev().focus();
+                $this = $this.prev();
+            }
+        })
+    });
+    // Function fetching digits from inputs and returning it as a 6 digits number
+    function fetchNumberfromInput() {
+        var i1 = $("#i1").val();
+        var i2 = $("#i2").val();
+        var i3 = $("#i3").val();
+        var i4 = $("#i4").val();
+        var i5 = $("#i5").val();
+        var i6 = $("#i6").val();
+        return i1 + i2 + i3 + i4 + i5 + i6;
+    }
+    // Removing values from all inputs
+    function clearInputs() {
+        $("#i1").val("");
+        $("#i2").val("");
+        $("#i3").val("");
+        $("#i4").val("");
+        $("#i5").val("");
+        $("#i6").val("");
+    }
+    // On submit 
+    $("#sumbit").on('click', function () {
+        // Initialize request
+        var request;
+        // Siging number to a variable
+        var code = fetchNumberfromInput()
+        // clearing inputs after submitting form
+        clearInputs();
+
+        event.preventDefault();
+        if (request) {
+            request.abort();
+        }
+        request = $.ajax({
+            url: "/getdata",
+            type: "get",
+            data: {
+                code: code
+            }
+        });
+        // Callback handler that will be called on success
+        request.done(function (data) {
+            // On Success inform user that 
+            var reslink = data.link;
+            console.log(data.link);
+            $("#download_link").attr("href", reslink);
+            $("#download_link").show();
+         
+
+        })
+        // Callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // On error send promt to the user
+
+
+            // Log the error to the console
+            console.error(
+                "The following error occurred: " +
+                textStatus, errorThrown
+            );
+        }); 
+    });
+
+</script>
+<style>
+    #download_link {
+        display: none;
+    }
+    input::-webkit-input-placeholder {
+        color: #f8f9fa !important
+    }
+    input:-moz-placeholder {
+        color: #f8f9fa !important
+    }
+
+    input::-moz-placeholder /* Firefox 19+ */ {
+        color: #f8f9fa !important
+    }
+
+    input:-ms-input-placeholder {
+        color: #f8f9fa !important
+    }
+    .inputs
+    input {
+        width: 100px;
+        height: 60px;
+        line-height: 100%;
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        color: white;
+        font-size: 60px;
+        word-spacing: 0px;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, #4568dc, #b06ab3);
+        color: #D7D7EF;
+        font-family: 'Lato', sans-serif;
+    }
+
+    h2 {
+        margin: 50px 0;
+    }
+
+    section {
+        flex-grow: 1;
+    }
+
+    .file-drop-area {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 450px;
+        max-width: 100%;
+        padding: 25px;
+        border: 1px dashed rgba(255, 255, 255, 0.4);
+        border-radius: 3px;
+        transition: 0.2s;
+        &.is-active
+
+    {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    }
+
+    .fake-btn {
+        flex-shrink: 0;
+        background-color: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        padding: 8px 15px;
+        margin-right: 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .file-msg {
+        font-size: small;
+        font-weight: 300;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .file-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        opacity: 0;
+        &:focus
+
+    {
+        outline: none;
+    }
+
+    }
+
+    footer {
+        margin-top: 50px;
+        a
+
+    {
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 300;
+        font-size: 14px;
+        text-decoration: none;
+        &:hover
+
+    {
+        color: white;
+    }
+
+    }
+    }
+</style>
+</html>
+

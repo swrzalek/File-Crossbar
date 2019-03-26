@@ -1,0 +1,280 @@
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+    <body>
+
+        <h1 id="code">000 000</h1>
+
+        <div class="file-drop-area">
+            <span class="fake-btn">Choose files</span>
+            <span class="file-msg">or drag and drop files here</span>
+            <input id="file-input" class="file-input" type="file" multiple>
+            <input type="hidden" id="url" name="url" value="">
+
+        </div>
+        <div class="contatiner mt-2">
+            <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
+            <button id="next-file" type="button" class="btn btn-outline-success btn-lg">Next file</button>
+        </div>
+       
+        <footer>
+          
+        </footer>
+    </body>
+    <script>
+        alert('JavaScript working');
+        var $fileInput = $('.file-input');
+        var $droparea = $('.file-drop-area');
+        var link = "link";
+        var request;
+        //SUMBIT test
+
+        $("#sumbit").click(function () {
+            $(".file-drop-area").hide();
+            $("#code").show();          
+            $("#next-file").show();
+            $("#sumbit").hide();
+            var link = $('#url').val();
+            // AJAX 
+            event.preventDefault();
+            if (request) {
+                request.abort();
+            }
+            request = $.ajax({
+                url: "/returnrandom",
+                type: "post",
+                data: link
+            });
+            // Callback handler that will be called on success
+            request.done(function (data) {
+            
+                console.log(data.random);
+                var rm = data.random;
+                $("#code").text(rm.toString());
+               
+            })
+            // Callback handler that will be called on failure
+            request.fail(function (jqXHR, textStatus, errorThrown) {
+                // Log the error to the console
+                console.error(
+                    "The following error occurred: " +
+                    textStatus, errorThrown
+                );
+            });
+
+        });
+
+        
+        // Next file test
+        $("#next-file").click(function () {
+            $(".file-drop-area").show();
+            $("#code").hide();
+            $("#next-file").hide();
+            $("#sumbit").show();
+        });
+
+
+          
+
+        // highlight drag area
+        $fileInput.on('dragenter focus click', function() {
+          $droparea.addClass('is-active');
+        });
+
+        // back to normal state
+        $fileInput.on('dragleave blur drop', function() {
+          $droparea.removeClass('is-active');
+        });
+
+        // change inner text
+        $fileInput.on('change', function () {
+          var filesCount = $(this)[0].files.length;
+          var $textContainer = $(this).prev();
+
+          if (filesCount === 1) {
+            // if single file is selected, show file name
+            var fileName = $(this).val().split('\\').pop();
+            $textContainer.text(fileName);
+          } else {
+            // otherwise show number of files
+            $textContainer.text(filesCount + ' files selected');
+            }
+
+            initUpload();
+
+        });
+        // event on change state file input
+
+
+
+
+
+        // functions from account.html
+        function uploadFile(file, signedRequest, url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', signedRequest);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        document.getElementById('preview').src = url;
+                        document.getElementById('avatar-url').value = url;
+                    }
+                    else {
+                        alert('Could not upload file.');
+                    }
+                }
+            };
+            xhr.send(file);
+        }
+
+        /*
+          Function to get the temporary signed request from the app.
+          If request successful, continue to upload the file using this signed
+          request.
+        */
+        function getSignedRequest(file) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        uploadFile(file, response.signedRequest, response.url);
+                    }
+                    else {
+                        alert('Could not get signed URL.');
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        /*
+         Function called when file input updated. If there is a file selected, then
+         start upload procedure by asking for a signed request from the app.
+        */
+        function initUpload() {
+            console.log('working')
+            const files = document.getElementById('file-input').files;
+            const file = files[0];
+            if (file == null) {
+                return alert('No file selected.');
+            }
+            getSignedRequest(file);
+        }
+        // Ajax to send POST request after submitting form
+    
+
+   
+            // Prevent default posting of form 
+        
+       
+    </script>
+    <style>
+        #code {
+            display: none;
+        }
+        #next-file {
+            display: none;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #4568dc, #b06ab3);
+            color: #D7D7EF;
+            font-family: 'Lato', sans-serif;
+        }
+
+        h2 {
+            margin: 50px 0;
+        }
+
+        section {
+            flex-grow: 1;
+        }
+
+        .file-drop-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 450px;
+            max-width: 100%;
+            padding: 25px;
+            border: 1px dashed rgba(255, 255, 255, 0.4);
+            border-radius: 3px;
+            transition: 0.2s;
+            &.is-active
+
+        {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        }
+
+        .fake-btn {
+            flex-shrink: 0;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            padding: 8px 15px;
+            margin-right: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .file-msg {
+            font-size: small;
+            font-weight: 300;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+            opacity: 0;
+            &:focus
+
+        {
+            outline: none;
+        }
+
+        }
+
+        footer {
+            margin-top: 50px;
+            a
+
+        {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            font-size: 14px;
+            text-decoration: none;
+            &:hover
+
+        {
+            color: white;
+        }
+
+        }
+        }
+
+   
+
+    </style>
+</html>
+

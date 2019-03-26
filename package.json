@@ -8,6 +8,11 @@
   "dependencies": {
     "aws-sdk": "^2.423.0",
     "ejs": "2.x",
-    "express": "4.x"
+    "express": "4.x",
+    "firebase": "5.9.1-0",
+    "firebase-admin": "^7.1.1",
+    "md5": "^2.2.1",
+    "nodemon": "^1.18.10",
+    "random-number": "0.0.9"
   }
 }
