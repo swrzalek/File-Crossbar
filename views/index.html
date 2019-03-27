@@ -3,9 +3,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
     <body>
 
@@ -28,94 +31,89 @@
         </footer>
     </body>
     <script>
+        
         console.log('JavaScript working');
         var $fileInput = $('.file-input');
         var $droparea = $('.file-drop-area');
-        var request;
-        //SUMBIT test
 
-        $("#sumbit").click(function () {
+        var request;
+        // Submiting
+        $("#sumbit").click(function () {            
+            var filesCount = $("#file-input")[0].files.length;
+            if (filesCount === 0) {
+                toastr.error("No files selected")
+            } else {
+                // AJAX POST
+                // Fetch AWS file link singed to value property 
+                var aws_link = $('#url').val();
+                // ajax post request sending link to backend
+                request = $.ajax({
+                    url: "/returnrandom",
+                    type: "post",
+                    data: {"link": aws_link}
+                });
+                // Callback handler that will be called on success
+                request.done(function (data) {
+                    console.log(data.random);
+                    var rm = data.random;
+                    $("#code").text(rm.toString());
+                })
+                request.fail(function (jqXHR, textStatus, errorThrown) {
+                    // Log the error to the console
+                    toastr.error(
+                        "The following error occurred: " +
+                        textStatus, errorThrown
+                    );
+                // Prevent submiting
+                    event.preventDefault();
+                    if (request) {
+                        request.abort();
+                    } 
+                });
+                DOMafterSubmitSuccess();
+            }     
+        });
+        function DOMafterSubmitSuccess() {
             $(".file-drop-area").hide();
-            $("#code").show();          
+            $("#code").show();
             $("#next-file").show();
             $("#sumbit").hide();
-            $('#url').val();
-            var aws_link = $('#url').val();
-            // AJAX 
-            event.preventDefault();
-            if (request) {
-                request.abort();
-            }
-            request = $.ajax({
-                url: "/returnrandom",
-                type: "post",
-                data: {
-                "link" : aws_link}
-            });
-            // Callback handler that will be called on success
-            request.done(function (data) {
-            
-                console.log(data.random);
-                var rm = data.random;
-                $("#code").text(rm.toString());
-               
-            })
-            // Callback handler that will be called on failure
-            request.fail(function (jqXHR, textStatus, errorThrown) {
-                // Log the error to the console
-                console.error(
-                    "The following error occurred: " +
-                    textStatus, errorThrown
-                );
-            });
-
-        });
-
-        
-        // Next file test
+        }
+        // Next file respond
         $("#next-file").click(function () {
             $(".file-drop-area").show();
             $("#code").hide();
             $("#next-file").hide();
             $("#sumbit").show();
-        });
-
-
-          
-
+            $("#file-input").val('');
+            var $textContainer = $("#file-input").prev();
+            $textContainer.text('or drag and drop files here');
+        });          
         // highlight drag area
         $fileInput.on('dragenter focus click', function() {
           $droparea.addClass('is-active');
         });
-
         // back to normal state
         $fileInput.on('dragleave blur drop', function() {
           $droparea.removeClass('is-active');
         });
-
         // change inner text
         $fileInput.on('change', function () {
-          var filesCount = $(this)[0].files.length;
-          var $textContainer = $(this).prev();
+            var filesCount = $(this)[0].files.length;
+            var $textContainer = $(this).prev();
 
-          if (filesCount === 1) {
-            // if single file is selected, show file name
-            var fileName = $(this).val().split('\\').pop();
-            $textContainer.text(fileName);
-          } else {
-            // otherwise show number of files
-            $textContainer.text(filesCount + ' files selected');
+            if (filesCount === 1) {
+                // if single file is selected, show file name
+                var fileName = $(this).val().split('\\').pop();
+                $textContainer.text(fileName);
+            } else {
+                // otherwise show number of files
+                $textContainer.text(filesCount + ' files selected');
             }
 
             initUpload();
 
         });
-        // event on change state file input
-
-
-
-
-
         // functions from account.html
         function uploadFile(file, signedRequest, url) {
             const xhr = new XMLHttpRequest();
@@ -124,9 +122,14 @@
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         document.getElementById('url').value = url;
+
+                        $('#submit').toggleClass('btn btn-outline-success btn-lg');
+                        setTimeout(function () {                            
+                            $('#submit').toggleClass('btn btn-outline-light btn-lg');
+                        }, 2000);
                     }
                     else {
-                        alert('Could not upload file.');
+                        toastr.error('Could not upload file.');
                     }
                 }
             };
@@ -168,113 +171,8 @@
             }
             getSignedRequest(file);
         }
-        // Ajax to send POST request after submitting form
-    
-
-   
-            // Prevent default posting of form 
-        
+      
        
     </script>
-    <style>
-        #code {
-            display: none;
-        }
-        #next-file {
-            display: none;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to right, #4568dc, #b06ab3);
-            color: #D7D7EF;
-            font-family: 'Lato', sans-serif;
-        }
-
-        h2 {
-            margin: 50px 0;
-        }
-
-        section {
-            flex-grow: 1;
-        }
-
-        .file-drop-area {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 450px;
-            max-width: 100%;
-            padding: 25px;
-            border: 1px dashed rgba(255, 255, 255, 0.4);
-            border-radius: 3px;
-            transition: 0.2s;
-            &.is-active
-
-        {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        }
-
-        .fake-btn {
-            flex-shrink: 0;
-            background-color: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            padding: 8px 15px;
-            margin-right: 10px;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        .file-msg {
-            font-size: small;
-            font-weight: 300;
-            line-height: 1.4;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .file-input {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            cursor: pointer;
-            opacity: 0;
-            &:focus
-
-        {
-            outline: none;
-        }
-
-        }
-
-        footer {
-            margin-top: 50px;
-            a
-
-        {
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 300;
-            font-size: 14px;
-            text-decoration: none;
-            &:hover
-
-        {
-            color: white;
-        }
-
-        }
-        }
-
-   
-
-    </style>
 </html>
 

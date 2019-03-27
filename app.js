@@ -49,6 +49,7 @@ app.listen(process.env.PORT || 3000 , console.log('App running !'));
 aws.config.region = 'eu-west-2';
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use('/css', express.static(__dirname + '/css'));
 /*
  * Load the S3 information from the environment variables.
  */
@@ -57,7 +58,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
  * Respond to GET requests to /account.
  * Upon request, render the 'account.html' web page in views/ directory.
  */
-app.get('/', (req, res) => res.render('index.html'));
+app.get('/send', (req, res) => res.render('index.html'));
 app.get('/account', (req, res) => res.render('account.html'));
 app.get('/rec', (req, res) => res.render('receive.html'));
 
@@ -133,4 +134,7 @@ app.post('/returnrandom', (req, res) => {
                 });
     }
     writeUserData(md5_code, link);
+})
+app.get("/", (req, res) => {
+    res.render("home.html")
 })
