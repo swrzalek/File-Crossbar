@@ -17,6 +17,8 @@ var rn = require('random-number');
 var firebase = require('firebase');
 var admin = require("firebase-admin");
 var md5 = require('md5');
+var bodyParser = require('body-parser');
+
 // Random numbers generator config
 var gen = rn.generator({
     min: 100000
@@ -45,6 +47,8 @@ app.use(express.static('./public'));
 app.engine('html', require('ejs').renderFile);
 app.listen(process.env.PORT || 3000 , console.log('App running !'));
 aws.config.region = 'eu-west-2';
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 /*
  * Load the S3 information from the environment variables.
  */
@@ -102,14 +106,14 @@ app.get('/getdata', (req, res) => {
     console.log("Kod md5 wpisany: " + md5_code)
     function findLinkInDatabase(md5_code) {
         firebase.database().ref('/crossbarfile/' + md5_code).once('value').then(function (snapshot) {
-            var link = snapshot.child('link_address').val();
-            console.log(link);
+            var finalLink = snapshot.child('link_address').val();
+            res.json({ link: finalLink });
         });
-       
+
     }
-    var finalLink = findLinkInDatabase(md5_code);
-    res.json({ link: finalLink });
-    console.log(findLinkInDatabase(md5_code));
+    findLinkInDatabase(md5_code);
+    
+    
 
 });  
 
@@ -119,13 +123,14 @@ app.post('/returnrandom', (req, res) => {
     console.log(rm.toString());
     res.json({ "random": rm });
     var md5_code = md5(rm.toString());
+    var link = req.body.link;
     console.log("kod md5 wygenerowany: " + md5_code)
-    var url = "https://s3.eu-west-2.amazonaws.com/crossfilebar/t.jpg";
-    writeUserData(md5_code,url )
+   // handle sent data from frontend !!!LINK!!!;
+    
     function writeUserData(code , link) {
         firebase.database().ref('crossbarfile/' + code).set({
             link_address:link
                 });
     }
-    
+    writeUserData(md5_code, link);
 })

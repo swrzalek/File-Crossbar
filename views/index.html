@@ -28,10 +28,9 @@
         </footer>
     </body>
     <script>
-        alert('JavaScript working');
+        console.log('JavaScript working');
         var $fileInput = $('.file-input');
         var $droparea = $('.file-drop-area');
-        var link = "link";
         var request;
         //SUMBIT test
 
@@ -40,7 +39,8 @@
             $("#code").show();          
             $("#next-file").show();
             $("#sumbit").hide();
-            var link = $('#url').val();
+            $('#url').val();
+            var aws_link = $('#url').val();
             // AJAX 
             event.preventDefault();
             if (request) {
@@ -49,7 +49,8 @@
             request = $.ajax({
                 url: "/returnrandom",
                 type: "post",
-                data: link
+                data: {
+                "link" : aws_link}
             });
             // Callback handler that will be called on success
             request.done(function (data) {
