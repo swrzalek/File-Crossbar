@@ -25,6 +25,9 @@ section {
     flex-grow: 1;
 }
 
+#download_link {
+    display: none;
+}
 .file-drop-area {
     position: relative;
     display: flex;
