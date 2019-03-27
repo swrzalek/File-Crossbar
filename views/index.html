@@ -123,7 +123,7 @@
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        document.getElementById('url').src = url;
+                        document.getElementById('url').value = url;
                     }
                     else {
                         alert('Could not upload file.');
