@@ -15,7 +15,6 @@ const express = require('express');
 const aws = require('aws-sdk');
 var rn = require('random-number');
 var firebase = require('firebase');
-var admin = require("firebase-admin");
 var md5 = require('md5');
 var bodyParser = require('body-parser');
 
@@ -35,9 +34,6 @@ var config = {
     messagingSenderId: "149186962608"
 };
 firebase.initializeApp(config);
-var database = firebase.database()
-
-
 /*
  * Set-up and run the Express app.
  */
@@ -45,8 +41,6 @@ const app = express();
 app.set('views', './views');
 app.use(express.static('./public'));
 app.engine('html', require('ejs').renderFile);
-app.listen(process.env.PORT || 3000 , console.log('App running !'));
-aws.config.region = 'eu-west-2';
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/css', express.static(__dirname + '/css'));
@@ -59,8 +53,10 @@ const S3_BUCKET = process.env.S3_BUCKET;
  * Upon request, render the 'account.html' web page in views/ directory.
  */
 app.get('/send', (req, res) => res.render('index.html'));
-app.get('/account', (req, res) => res.render('account.html'));
-app.get('/rec', (req, res) => res.render('receive.html'));
+app.get('/receive', (req, res) => res.render('receive.html'));
+app.get("/", (req, res) => {
+    res.render("home.html")
+})
 
 /*
  * Respond to GET requests to /sign-s3.
@@ -98,10 +94,6 @@ app.get('/sign-s3', (req, res) => {
  * This function needs to be completed to handle the information in
  * a way that suits your application.
  */
-app.post('/save-details', (req, res) => {
-  // TODO: Read POSTed form data and do something useful
-});
-
 app.get('/getdata', (req, res) => {
     var md5_code = md5(req.query.code.toString());
     console.log("Kod md5 wpisany: " + md5_code)
@@ -117,7 +109,6 @@ app.get('/getdata', (req, res) => {
     
 
 });  
-
 app.post('/returnrandom', (req, res) => {
     var rm = gen();
 
@@ -135,6 +126,6 @@ app.post('/returnrandom', (req, res) => {
     }
     writeUserData(md5_code, link);
 })
-app.get("/", (req, res) => {
-    res.render("home.html")
-})
+
+app.listen(process.env.PORT || 3000, console.log('App running !'));
+aws.config.region = 'eu-west-2';

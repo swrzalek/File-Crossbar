@@ -24,19 +24,19 @@
         <div class="contatiner mt-2">
             <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
             <button id="next-file" type="button" class="btn btn-outline-success btn-lg">Next file</button>
+            <a class="next" href="/receive">next</a>
         </div>
        
         <footer>
           
         </footer>
     </body>
-    <script>
-        
+    <script>        
         console.log('JavaScript working');
         var $fileInput = $('.file-input');
         var $droparea = $('.file-drop-area');
-
         var request;
+
         // Submiting
         $("#sumbit").click(function () {            
             var filesCount = $("#file-input")[0].files.length;
@@ -110,7 +110,6 @@
                 // otherwise show number of files
                 $textContainer.text(filesCount + ' files selected');
             }
-
             initUpload();
 
         });
@@ -122,7 +121,7 @@
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         document.getElementById('url').value = url;
-
+                        toastr.success("up")
                         $('#submit').toggleClass('btn btn-outline-success btn-lg');
                         setTimeout(function () {                            
                             $('#submit').toggleClass('btn btn-outline-light btn-lg');
@@ -171,8 +170,6 @@
             }
             getSignedRequest(file);
         }
-      
-       
     </script>
 </html>
 

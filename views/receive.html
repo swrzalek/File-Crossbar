@@ -26,7 +26,7 @@
         </div>
         <div class="contatiner mt-2">
             <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
-            <a id="download_link" href="" type="button"  class="btn btn-outline-info btn-lg">Download</a>
+            
         </div>
         <footer>
             <iframe id="my_iframe" style="display:none;"></iframe>
@@ -105,11 +105,12 @@
         // Initialize request
         var request;
         // Siging number to a variable
-        var code = fetchNumberfromInput()
-        console.log(code);
+        var code = fetchNumberfromInput();
+        // Checking if enetered code is not empty and have 6 digits
         if (code == "" && code.length != 6 ) {
             toastr.error("Please enter code !");
-        } else {
+        }
+        else {
             event.preventDefault();
             if (request) {
                 request.abort();
@@ -150,42 +151,23 @@
                         } else {
                             blob = canvas.toDataURL("image/png");
                         }
+                       //  var element = "'<a id="download_link" download='" + fileName + "' href='" + blob + " type = "button"  class="btn btn-outline-info btn-lg" > Download</a >
+
                         $("body").html("<b>Click image to download.</b><br><a download='" + fileName + "' href='" + blob + "'><img src='" + blob + "'/></a>");
                     };
-                    /////
-
-            }
-                console.log(reslink);
-                console.log(data.link);
-
-
-
+                }               
             })
-            request.fail(function (jqXHR, textStatus, errorThrown) {
-                // On error send promt to the user
-
-
+            request.fail(function (jqXHR, textStatus, errorThrown) {                
                 // Log the error to the console
                 console.error(
                     "The following error occurred: " +
                     textStatus, errorThrown
                 );
             }); 
-
         }
-
         // clearing inputs after submitting form
         clearInputs();
-
-      
-
-       
-        // Callback handler that will be called on success
-       
-        // Callback handler that will be called on failure
-        
     });
-
 </script>
 
 </html>
