@@ -155,16 +155,7 @@ input {
     text-align: center;
 }
 
-.submit {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    
-}
 
-    .submit:hover {
-        background-color: #222222;
-    }
 
 .loading {
     font-size: 0;
