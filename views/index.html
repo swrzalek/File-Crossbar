@@ -9,11 +9,11 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
     <body>
 
         <h1 id="code">000 000</h1>
-
         <div class="file-drop-area">
             <span class="fake-btn">Choose files</span>
             <span class="file-msg">or drag and drop files here</span>
@@ -23,6 +23,17 @@
         </div>
         <div class="contatiner mt-2">
             <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
+
+            <div class="row" style="display:none;">
+                <div class="col-xs-12 button-holder">
+                    <div class="btn btn-outline-light btn-lg">
+                        <div class="fa fa-check done"></div>
+                        <div class="fa fa-close failed"></div>
+                        <input id="submit" class="submit" type="button" value="Submit" />
+                    </div>
+                </div>
+            </div>
+
             <button id="next-file" type="button" class="btn btn-outline-success btn-lg">Next file</button>
             <a class="next" href="/receive">next</a>
         </div>
@@ -31,7 +42,25 @@
           
         </footer>
     </body>
-    <script>        
+    <script> 
+
+        //$(document).ready(function () {
+        //    $(".submit").click(function () {
+        //        $(".submit").addClass("loading");
+        //        setTimeout(function () {
+        //            $(".submit").addClass("hide-loading");
+        //            // For failed icon just replace ".done" with ".failed"
+        //            $(".done").addClass("finish");
+        //        }, 3000);
+        //        setTimeout(function () {
+        //            $(".submit").removeClass("loading");
+        //            $(".submit").removeClass("hide-loading");
+        //            $(".done").removeClass("finish");
+        //            $(".failed").removeClass("finish");
+        //        }, 5000);
+        //    })
+        //});
+
         console.log('JavaScript working');
         var $fileInput = $('.file-input');
         var $droparea = $('.file-drop-area');
@@ -121,11 +150,8 @@
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         document.getElementById('url').value = url;
-                        toastr.success("up")
-                        $('#submit').toggleClass('btn btn-outline-success btn-lg');
-                        setTimeout(function () {                            
-                            $('#submit').toggleClass('btn btn-outline-light btn-lg');
-                        }, 2000);
+                        toastr.success("up")                       
+                        
                     }
                     else {
                         toastr.error('Could not upload file.');
@@ -134,7 +160,8 @@
             };
             xhr.send(file);
         }
-
+        //New function from above in jquery
+        
         /*
           Function to get the temporary signed request from the app.
           If request successful, continue to upload the file using this signed
