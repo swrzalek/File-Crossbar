@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
-<body>  
+<body id="rec">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="inputs" id="inputs">
@@ -23,14 +23,15 @@
                 <input maxlength="1" id="i6" placeholder="_" value="" />
             </div>
         </div>
-        </div>
-        <div class="contatiner mt-2">
-            <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
-            
-        </div>
-        <footer>
-            <iframe id="my_iframe" style="display:none;"></iframe>
-        </footer>
+    </div>
+    <div class="contatiner mt-2">
+        <button id="sumbit" type="button" class="btn btn-outline-light btn-lg">Submit</button>
+
+    </div>
+    <a class="next-r" href="/send">back</a>
+    <footer>
+        <iframe id="my_iframe" style="display:none;"></iframe>
+    </footer>
 </body>
 <script>  
 
@@ -168,6 +169,7 @@
         // clearing inputs after submitting form
         clearInputs();
     });
+
 </script>
 
 </html>

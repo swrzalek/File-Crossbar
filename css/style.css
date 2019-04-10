@@ -2,6 +2,31 @@
     right: 0;
     background: #9761A6 url('https://lh4.googleusercontent.com/-JN1IZLtuToI/UUoZnMG3C_I/AAAAAAAAAE8/SEbJ9nqXGnY/s226/sprite.png') no-repeat -167px 333px;
 }
+
+#rec {
+    background: linear-gradient(to left, #b06ab3,#b06ab3,#b06ab3,#b06ab3,#4568dc) !important;
+}
+a.prev, a.next-r {
+    height: -webkit-fill-available;
+    position: absolute;
+    width: 43px;
+    top: 4%;
+    margin-top: -30px;
+    opacity: 0.6;
+    text-indent: -99999px;
+    cursor: pointer;
+    -webkit-transition: opacity 200ms ease-out;
+}
+
+    a.prev:hover, a.next-r:hover {
+        opacity: 1;
+    }
+
+.next-r {
+    left: 0;
+    background: #5f75dc url('https://lh4.googleusercontent.com/-JN1IZLtuToI/UUoZnMG3C_I/AAAAAAAAAE8/SEbJ9nqXGnY/s226/sprite.png') no-repeat -201px 333px;
+}
+
 a.prev, a.next {
     height: -webkit-fill-available;
     position: absolute;
