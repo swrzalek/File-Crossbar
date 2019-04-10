@@ -150,7 +150,8 @@
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         document.getElementById('url').value = url;
-                        toastr.success("up")                       
+                        toastr.success("up")
+                        $("#sumbit").show();
                         
                     }
                     else {

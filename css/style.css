@@ -65,6 +65,9 @@ section {
 }
 
 }
+#submit {
+    display:none;
+}
 
 .fake-btn {
     flex-shrink: 0;
