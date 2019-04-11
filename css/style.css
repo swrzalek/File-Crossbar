@@ -17,7 +17,11 @@ a.prev, a.next-r {
     cursor: pointer;
     -webkit-transition: opacity 200ms ease-out;
 }
-
+.file-drop-area:hover .fas {
+    
+    color: #bfc3da !important;
+    -webkit-transition: width 2s;
+}
     a.prev:hover, a.next-r:hover {
         opacity: 1;
     }
@@ -70,6 +74,16 @@ section {
     flex-grow: 1;
 }
 
+
+.file-drop-area:hover {
+    border: 4px dashed #bfc3da;
+    -webkit-transition: width 2s;
+}
+.fas:hover {
+    color: #bfc3da;
+    -webkit-transition: width 2s;
+}
+
 #download_link {
     display: none;
 }
@@ -77,11 +91,12 @@ section {
     position: relative;
     display: flex;
     align-items: center;
-    width: 450px;
+    height: 400px;
+    width: 400px;
     max-width: 100%;
     padding: 25px;
-    border: 1px dashed rgba(255, 255, 255, 0.4);
-    border-radius: 3px;
+    border: 4px dashed #3c4c9c;
+    border-radius: 400px;
     transition: 0.2s;
     &.is-active
 
@@ -95,12 +110,13 @@ section {
 }
 
 .fake-btn {
+    margin-left: 130px;
     flex-shrink: 0;
     background-color: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 3px;
     padding: 8px 15px;
-    margin-right: 10px;
+   
     font-size: 12px;
     text-transform: uppercase;
 }
