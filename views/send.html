@@ -1,0 +1,209 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+    <body>
+
+        <h1 id="code">000 000</h1>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="file-drop-area">
+                    <i style="margin-left:auto; margin-right:auto;color: #3c4c9c;" class="fas fa-cloud-upload-alt fa-9x"></i>
+
+                    <input id="file-input" class="file-input" type="file" multiple>
+                    <input type="hidden" id="url" name="url" value="">
+
+                </div>
+                <div class="col-xs-12 mt-4">
+                    <span class="fake-btn">Choose files</span>
+                </div>
+                </div>
+            </div>
+       
+        <div class="contatiner mt-2">
+            <button id="sumbit" style="display:none;" type="button" class="btn btn-outline-light btn-lg">Submit</button>
+
+            <div class="row" style="display:none;">
+                <div class="col-xs-12 button-holder">
+                    <div class="btn btn-outline-light btn-lg">
+                        <div class="fa fa-check done"></div>
+                        <div class="fa fa-close failed"></div>
+                        <input id="submit" style="display:none;" class="submit" type="button" value="Submit" />
+                    </div>
+                </div>
+            </div>
+
+            <button id="next-file" type="button" class="btn btn-outline-success btn-lg">Next file</button>
+            <a class="next" href="/receive">next</a>
+        </div>
+       
+        <footer>
+          
+        </footer>
+    </body>
+    <script type="text/javascript" >
+
+        console.log('JavaScript working');
+        var $fileInput = $('.file-input');
+        var $droparea = $('.file-drop-area');
+        var request;
+
+        //$(document).ready(function () {
+        //    $(".submit").click(function () {
+        //        $(".submit").addClass("loading");
+        //        setTimeout(function () {
+        //            $(".submit").addClass("hide-loading");
+        //            // For failed icon just replace ".done" with ".failed"
+        //            $(".done").addClass("finish");
+        //        }, 3000);
+        //        setTimeout(function () {
+        //            $(".submit").removeClass("loading");
+        //            $(".submit").removeClass("hide-loading");
+        //            $(".done").removeClass("finish");
+        //            $(".failed").removeClass("finish");
+        //        }, 5000);
+        //    })
+        //});
+        // Submiting
+        $("#sumbit").click(function () {
+            var filesCount = $("#file-input")[0].files.length;
+            if (filesCount === 0) {
+                toastr.error("No files selected")
+            } else {
+                // AJAX POST
+                // Fetch AWS file link singed to value property 
+                var aws_link = $('#url').val();
+                // ajax post request sending link to backend
+                request = $.ajax({
+                    url: "/returnrandom",
+                    type: "post",
+                    data: { "link": aws_link }
+                });
+                // Callback handler that will be called on success
+                request.done(function (data) {
+                    console.log(data.random);
+                    var rm = data.random;
+                    $("#code").text(rm.toString());
+                })
+                request.fail(function (jqXHR, textStatus, errorThrown) {
+                    // Log the error to the console
+                    toastr.error(
+                        "The following error occurred: " +
+                        textStatus, errorThrown
+                    );
+                    // Prevent submiting
+                    event.preventDefault();
+                    if (request) {
+                        request.abort();
+                    }
+                });
+                DOMafterSubmitSuccess();
+            }
+        });
+        function DOMafterSubmitSuccess() {
+            $(".file-drop-area").hide();
+            $("#code").show();
+            $("#next-file").show();
+            $("#sumbit").hide();
+        }
+        // Next file respond
+        $("#next-file").click(function () {
+            $(".file-drop-area").show();
+            $("#code").hide();
+            $("#next-file").hide();
+            $("#file-input").val('');
+            var $textContainer = $("#file-input").prev();
+            $textContainer.text('or drag and drop files here');
+        });
+        // highlight drag area
+        $fileInput.on('dragenter focus click', function () {
+            $droparea.addClass('is-active');
+        });
+        // back to normal state
+        $fileInput.on('dragleave blur drop', function () {
+            $droparea.removeClass('is-active');
+        });
+        // change inner text
+        $fileInput.on('change', function () {
+            var filesCount = $(this)[0].files.length;
+            var $textContainer = $('.fake-btn');
+
+            if (filesCount === 1) {
+                // if single file is selected, show file name
+                var fileName = $(this).val().split('\\').pop();
+                $textContainer.text(fileName);
+            } else {
+                // otherwise show number of files
+                $textContainer.text(filesCount + ' files selected');
+            }
+            initUpload();
+
+        });
+        // functions from account.html
+        function uploadFile(file, signedRequest, url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', signedRequest);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        document.getElementById('url').value = url;
+                        toastr.success("up")
+                        $("#sumbit").show();
+
+                    }
+                    else {
+                        toastr.error('Could not upload file.');
+                    }
+                }
+            };
+            xhr.send(file);
+        }
+        //New function from above in jquery
+
+        /*
+          Function to get the temporary signed request from the app.
+          If request successful, continue to upload the file using this signed
+          request.
+        */
+        function getSignedRequest(file) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `send/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        uploadFile(file, response.signedRequest, response.url);
+                    }
+                    else {
+                        toastr.error('Could not get signed URL.');
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        /*
+         Function called when file input updated. If there is a file selected, then
+         start upload procedure by asking for a signed request from the app.
+        */
+        function initUpload() {
+            console.log('working')
+            const files = document.getElementById('file-input').files;
+            const file = files[0];
+            if (file == null) {
+                return alert('No file selected.');
+            }
+            getSignedRequest(file);
+        }
+    </script>
+</html>
+

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "devserver": "nodemon app.js"
   },
   "dependencies": {
     "aws-sdk": "^2.423.0",
@@ -13,8 +14,10 @@
     "firebase": "5.9.1-0",
     "firebase-admin": "^7.1.1",
     "md5": "^2.2.1",
-    "nodemon": "^1.18.10",
     "random-number": "0.0.9",
     "toastr": "^2.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }
