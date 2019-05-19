@@ -110,13 +110,11 @@ section {
 }
 
 .fake-btn {
-    margin-left: 130px;
+   
     flex-shrink: 0;
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 3px;
     padding: 8px 15px;
-   
     font-size: 12px;
     text-transform: uppercase;
 }

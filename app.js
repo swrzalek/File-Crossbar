@@ -5,8 +5,6 @@
 
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
-
-
 /*
  * Import required packages.
  * Packages should be installed with "npm install".
@@ -45,8 +43,6 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/css', express.static(__dirname + '/css'));
 
-
-
 var send = require('./routes/sendRoutes')
 app.use('/send', send)
 var receive = require('./routes/receiveRoutes')
@@ -55,8 +51,6 @@ app.use('/receive', receive)
 app.get("/", (req, res) => {
     res.render("home.html")
 })
-
-
 
 /*
  * Respond to POST requests to /submit_form.
@@ -74,8 +68,7 @@ app.get('/getdata', (req, res) => {
 
     }
     findLinkInDatabase(md5_code);
-    
-    
+        
 
 });  
 app.post('/returnrandom', (req, res) => {
