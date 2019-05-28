@@ -37,7 +37,7 @@ firebase.initializeApp(config);
  */
 const app = express();
 app.set('views', './views');
-app.use(express.static('./public'));
+app.use('/views/js', express.static(__dirname + '/views/js'));
 app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
