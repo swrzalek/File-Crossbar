@@ -31,7 +31,7 @@ $("#sumbit").click(function () {
         var aws_link = $('#url').val();
         // ajax post request sending link to backend
         request = $.ajax({
-            url: "/returnrandom",
+            url: "/send/getCode",
             type: "post",
             data: { "link": aws_link }
         });

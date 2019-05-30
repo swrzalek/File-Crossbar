@@ -81,7 +81,7 @@ $("#sumbit").on('click', function () {
             request.abort();
         }
         request = $.ajax({
-            url: "/getdata",
+            url: "/receive/getImageUrl",
             type: "get",
             data: {code: code}
         });
