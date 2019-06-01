@@ -24,7 +24,7 @@ const corsOptions = {
     }
 }
 // Enable preflight requests for all routes
-app.options('*', cors(corsOptions));
+router.options('*', cors(corsOptions));
 router.get('/', (req, res) =>
     res.render('receive.html'
     ));
