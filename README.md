@@ -1,6 +1,6 @@
 <img align="right" width="150" height="150" src="documentation/fc_icon.jpg">
 
-# TricityTravel
+# FileCrossbar
 
 ## 1. Specyfikacja wymagań
 ### 1.1. Opis systemu
@@ -14,28 +14,23 @@ Nazwa krótka: FileCross
 3. Mateusz Arendarski
 
 #### 1.1.3. Charakterystyka
-Aplikacja mobilna ułatwiająca podejmowanie decyzji o poruszaniu się po Trójmieście. Uwzględnia wskazówki do podróży komunikacją miejską, poruszania się autem oraz wskazuje aktualną pogodę.
+Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telefonu oraz przeglądarki bez konieczności zakładania konta.
 
 ###  1.2. Specyfikacja właściwa - historyjki użytkowników
 
 #### 1.2.1 Wymagania Funkcjonalne
-**W1.** Osoba zainteresowana TricityTravel [kto] w ramach dedykowanej platformy sprzedażowej po uprzednim zalogowaniu się na koncie Google [gdzie] może pobrać aplikację na swoje urządzenie mobilne z systemem Android w wersji minimum 6.0 [co]
+**W1.** Jako użytkownik systemu FileCrossbar [kto] poprzez aplikację mobilną lub webową w zakładce "Załąduj zdjęcie" [gdzie] mam możliwość udostępnienia zdjęcia [co].
 
-**W2.** Użytkownik aplikacji TricityTravel [kto] w zakładce z ustawieniami [gdzie] może spersonalizować swoje ustawienia dotyczące poruszania się po Trójmieście (ustawienia pogody; przystanków, z których korzysta użytkownik; wybranej trasy w podróży samochodem; ustawienia tagów do poboru informacji z Trójmiasto.pl) [co].
+**W2.** Jako osoba udostępniająca zasób [kto] po udostępnieniu pliku w aplikacji "Załąduj zdjęcie" [gdzie] otrzymam sześciocyfrowy kod dostępu do pliku [co].
 
-**W3.** Użytkownik aplikacji TricityTravel [kto] w zakładce "Samochód" [gdzie] wyświetla czas najkrótszego przejazdu od podanego punktu A do B na podstawie danych Here Maps [co].
+**W3.** Jako osoba pobierająca zasób [kto] w zakładce "Odbierz zdjęcie" [gdzie] mam możliwość wpisania kodu dostępu i zobaczenia podglądu pliku [co].
 
-**W4.** Użytkownik aplikacji TricityTravel [kto] w zakładce "Transport publiczny" [gdzie] wyświetla listę linii transportu publicznego w połączeniu z przystankami, które zostały wybrane w ustawieniach oraz informacje na temat rzeczywistych czasów przyjazdu danego pojazdu na podstawie Otwartych Danych ZTM Gdańsk [co].
-
-**W5.** Użytkownik aplikacji TricityTravel [kto] w zakładce "Pogoda" [gdzie] wyświetla informacje meteorologiczne w wybranym w ustawieniach mieście na podstawie danych OpenWeatherMap [co].
-
-**W6.** Użytkownik aplikacji TricityTravel [kto] w zakładce "Raport" [gdzie] wyświetla informacje z Raportu Trójmiasto (trojmiasto.pl) o utrudnieniach w poruszaniu się po Trójmieście na podstawie tagów (słów kluczowych) wybranych przez użytkownika [co].
-
-![Use cases diagram](/documentation/use_cases_diagram.png)
+**W4.** Jako osoba pobierająca zasób [kto] w zakładce "Odbierz zdjęcie" [gdzie] mam możliwość pobrania pliku na urządzenie [co].
 
 #### 1.2.2 Wymagania Niefunkcjonalne
 
-**W7.** Użytkownik aplikacji TricityTravel [kto] we wszystkich zakładkach aplikacji [gdzie] sprawnie ładuję dane(do 1s)[co].
+**W7.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby moje pliki zostały usunięte z serwera po upływie 24 godzin[co] w celu zapewnienia bezpieczeństwa [dlaczego].
+**W8.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby kod dostępu do pliku został zaszyfrowany [co] aby zapobiegać kradzieży danych [dlaczego].
 
 ## 2. Projekt
 ### 2.1. Możliwość instalacji i przekazania projektu
