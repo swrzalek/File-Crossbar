@@ -178,56 +178,59 @@ Tag wyświetla się poniżej pola tekstowego.
 1. Subiektywnie szybkie (do 1s) wyświetlenie widoku.
 
 ## 4. Instrukcja instalacji i uruchomienia
-### 4.1 Instalacja aplikacji na urządzeniu mobilnym w celu testowym
-1. Skopiowanie pliku .apk z folderu /apk projektu na urządzenie mobilne z systemem Android w wersji 6.0 lub wyższej,
-2. Wyszukanie pliku na urządzaniu mobilnym i instalacja aplikacji,
-3. (Opcjonalnie) Zezwolenie na instalację aplikacji z nieznanych źródeł.
 
-### 4.2 Uruchomienie projektu w celu dalszego rozwoju
-1. Pobranie i instalacja programu Android Studio w wersji 3.4 lub wyższej,
-2. Rozpaknowanie pliku .zip, lub sklonowanie projektu z serwisu GitHub do dowolnej lokalizacji na komputerze,
-3. W Android Studio wybranie opcji File/Open i wskazanie rozpakowanego projektu. Android Studio automatycznie pobierze wszystkie wymagane biblioteki i skompiluje projekt,
-4. Utworzenie bezpłatnych kont w serwisach https://openweathermap.org/ oraz https://developer.here.com/ i wygenerowanie kluczy API,
-5. W folderze \app\src\main\java\com\aib\tricitytravel\data utworzenie pliku APIKeys.kt o zawartości podanej poniżej oraz zamiana odpowiednich pól na własne, wygenerowane wcześniej, klucze API,
-```kotlin
-package com.aib.tricitytravel.data
-
-object APIKeys {
-
-    const val OPEN_WEATHER_KEY = "<tu wkleić klucz OpenWeatherMap>"
-    const val HERE_APP_ID = "<tu wkleić klucz Here App ID>"
-    const val HERE_APP_CODE = "<tu wkleić klucz Here App Code>"
-}
+### 4.1 Uruchomienie projektu w celu dalszego rozwoju
+1. Upewnij się ze NodeJS jest zainstalowany. Możesz wykonać to przez menadżer pakietów lub ze [strony](http://nodejs.org/).
+2. Zklonuj to rezpozytorium:
+```term
+$ git clone https://github.com/willwebberley/NodeDirectUploader.git
 ```
-6. Utworzenie bezpłatnego konta w serwisie https://firebase.google.com/,
-7. Utworzenie projektu o dowolnej nazwie w serwisie Firebase i postępowanie zgodnie z instrukcjami w celu podłączenia projektu w Android Studio z projektem w Firebase,
-8. Wdrożenie cloud function z folderu /firebase_cloud_functions w utworzonym projekcie Firebase zgodnie z instrukcją na stronie https://cloud.google.com/functions/docs/deploying/filesystem,
-9. Podmiana odnośnika "FIREBASE_DOMAIN" w pliku /data/URLs.kt na własny znajdujący się w zakładce "Functions" w serwisie Firebase,
-```kotlin
-package com.aib.tricitytravel.data
-
-object URLs {
-    const val ZTM_DOMAIN = "http://87.98.237.99:88/"
-    const val FIREBASE_DOMAIN = "<tu wkleić własny link do cloud function downloadBusStopsFromFirebase>"
-    const val OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/"
-    const val HERE_GEOCODER_DOMAIN = "https://geocoder.api.here.com/"
-    const val HERE_ROUTE_DOMAIN = "https://route.api.here.com/"
-    const val TROJMIASTO_REPORT = "https://www.trojmiasto.pl/raport/"
-}
+3. Do poprawnego działania aplikacje wymagane jest konto w serwisie Amazon Simple Storage Service oraz Google Firebase Realtime DB,
+4. Zmienić lokalizacje na lokalizacje aplikacji oraz zainstalować "zależności aplikacji":
+```term
+$ cd NodeDirectUploader
+$ yarn
 ```
-10. W Android Studio kliknięcie Run/Run 'app' i wybranie emulatora lub fizycznego urządzenia w celu uruchomienia aplikacji.
+5. Jeśli preferujesz  `npm` niż `yarn`, wten wpisz `npm install` .
+6. W głównym folderze należy uworzyć plik przechowujący zmienne `.env`:
+```dotenv
+AWS_ACCESS_KEY_ID=XXXXXXXXXXX
+AWS_SECRET_ACCESS_KEY=XXXXXXXXXXX
+S3_BUCKET=XXXXXXXXXXX
+S3_BUCKET_NAME=XXXXXXXXXXX
+FB_APIKEY=XXXXXXXXXXX
+FB_AUTHDOMAIN=XXXXXXXXXXX
+FB_DATABASEURL=XXXXXXXXXXX
+FB_PROJECTID=XXXXXXXXXXX
+FB_STORAGEBUCKET=XXXXXXXXXXX
+FB_SENDERID=XXXXXXXXXXX
+```
+
+
+## Uruchamianie aplikacji
+* Uruchom aplikacje poleceniem `yarn start` (lub `npm start`)
+* Przejdź pod adres [localhost:3000/](http://localhost:3000/) 
+* Moduł wysyłania w aplikacji znajdziesz pod adresem [localhost:3000/send](http://localhost:3000/send)
+* Moduł odbierania w aplikacji znajdziesz pod adresem [localhost:3000/receive](http://localhost:3000/receive)
+
+
+## Deploy aplikacji
+
+Zobacz artykuł [Deploy jest Git](https://devcenter.heroku.com/articles/git) po więcej informacji o deployu do serwisu Heroku
+
+* Ściągnij i zainstaluj [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+* Commituj twoją aplikacje do lokalnego repozytorium (e.g. `git init`, `git add .`, `git commit -m "version 1 commit"`, etc.)
+* Stwórz aplikacje na Heroku dodając Git remote (`$ heroku create`)
+* Wypchnij kod na nowe repozytorium(`$ git push heroku master`)
 
 ## 5. Uwagi ogólne
 
-### 5.1 Skrótowy opis głównych pakietów
- - data - zawiera klasy odpowiedzialne za pobieranie danych z web service'ów, zapis w lokalnej bazie danych, a także wszystkie modele i obiekty DTO (Data Transfer Objects),
- - di - zawiera moduły i komponenty wykorzystywane przez bibliotekę Dagger 2 potrzebne do wstrzykiwania zależności (Dependency Injection),
- - ui - zawiera wszystkie klasy widoków w aplikacji, wewnątrz pakietu zastosowany jest dodatkowy podział według zasady "package by feature",
- - util - zawiera klasy pomocnicze m. in. wykorzystywane w data binding.
-
+### 5.1 Podsumowanie
+Projekt pomimo działania wymaga kilku usprawnień, większość z nich to obsługa niechcianych błędów mogącaych zakółcić działanie aplikacji
+ oraz zmiany o podłożu UX/UI. Nie chciałem też pisać tej dokumentacji po Polsku, jeżeli czyta to Pani z HR to proszę mieć to na uwadze.
 ### 5.2 Licencja
 ```
-Copyright © 2019 by Agnieszka Maciejewska, Maciej Królik, Krzysztof Mikołajczyk. TricityTravel
+Copyright © 2019 by Sebastian Wrzalek. TricityTravel
 This application is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
 To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/4.0/.
 ```
