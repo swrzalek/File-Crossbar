@@ -5,15 +5,14 @@ const firebase = require('firebase');
 const app = express();
 /* FireBase Config -- It should be saved in environment variables */
 const config = {
-    apiKey: "AIzaSyC71XbnQxHPXYEeqdou8Q-eVgFlBq0uk1E",
-    authDomain: "crossbarfile.firebaseapp.com",
-    databaseURL: "https://crossbarfile.firebaseio.com",
-    projectId: "crossbarfile",
-    storageBucket: "crossbarfile.appspot.com",
-    messagingSenderId: "149186962608"
+    apiKey:  process.env.FB_APIKEY,
+    authDomain:  process.env.FB_AUTHDOMAIN,
+    databaseURL:  process.env.FB_DATABASEURL,
+    projectId:  process.env.FB_PROJECTID,
+    storageBucket:  process.env.FB_STORAGEBUCKET,
+    messagingSenderId:  process.env.FB_SENDERID
 };
 firebase.initializeApp(config);
-
 app.set('views', './views');
 app.use('/views/js', express.static(__dirname + '/views/js'));
 app.use('/temp', express.static(__dirname + '/temp'));
