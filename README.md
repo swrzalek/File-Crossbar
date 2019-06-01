@@ -33,6 +33,8 @@ Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telef
 
 **W8.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby kod dostępu do pliku został zaszyfrowany [co] aby zapobiegać kradzieży danych [dlaczego].
 
+![Use cases diagram](/documentation/activity_schema.png)
+
 ## 2. Projekt
 ### 2.1. Możliwość instalacji i przekazania projektu
 Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się wiedzą.
