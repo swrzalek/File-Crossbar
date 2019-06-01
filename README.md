@@ -30,6 +30,7 @@ Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telef
 #### 1.2.2 Wymagania Niefunkcjonalne
 
 **W7.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby moje pliki zostały usunięte z serwera po upływie 24 godzin[co] w celu zapewnienia bezpieczeństwa [dlaczego].
+
 **W8.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby kod dostępu do pliku został zaszyfrowany [co] aby zapobiegać kradzieży danych [dlaczego].
 
 ## 2. Projekt
