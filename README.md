@@ -1,4 +1,4 @@
-<img align="right" width="150" height="150" src="documentation/fc_icon.png">
+<img align="right" width="150" height="150" src="documentation/fc_icon.jpg">
 
 # TricityTravel
 
