@@ -219,7 +219,7 @@ Projekt pomimo działania wymaga kilku usprawnień, większość z nich to obsł
  oraz zmiany o podłożu UX/UI. Nie chciałem też pisać tej dokumentacji po Polsku, jeżeli czyta to Pani z HR to proszę mieć to na uwadze.
 ### 5.2 Licencja
 ```
-Copyright © 2019 by Sebastian Wrzalek. TricityTravel
+Copyright © 2019 by Sebastian Wrzalek. FileCross
 This application is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
 To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/4.0/.
 ```
