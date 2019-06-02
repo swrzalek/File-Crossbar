@@ -73,7 +73,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 ### 3.3. T3 - Odebranie zdjęcia 
 **Scenariusz dotyczy:** W3
 **Cel testu:**  Testowanie odbioru udostępnionego zdjęcia.
-**Sposób dostępu:** Widok wywoływany poprzez wybranie "RECIVE". 
+**Sposób dostępu:** Widok wywoływany poprzez wybranie "RECEIVE". 
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
 1. Wpisanie sześcio cyfrowego kodu.
@@ -121,7 +121,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
 1. Wybranie zakładki "SEND".
-2. Wybranie zakładki "RECIVE".
+2. Wybranie zakładki "RECEIVE".
 #### Odpowiedź systemu:  
 1. Subiektywnie szybkie (do 1s) wyświetlenie widoku.
 
