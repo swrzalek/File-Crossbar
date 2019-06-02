@@ -92,7 +92,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 #### Odpowiedź systemu:  
 1. Pobranie zdjęcia w wybrane miejsce.
 
-### 3.7. T7 - Udostępnionie zdjęcia - bezpieczeństwo
+### 3.5. T5 - Udostępnionie zdjęcia - bezpieczeństwo
 **Scenariusz dotyczy:** W7  
 **Cel testu:** Testowanie bezpieczenśtwa udostępnionego pliku.   
 **Sposób dostępu:** Widoki wywoływane przez wybranie "SEND".  
@@ -103,7 +103,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 #### Odpowiedź systemu:  
 1. Po 24 godzinach od udostępnienia, dany plik zostaje usunięty.
 
-### 3.8. T8 - Odebranie kodu zdjęcia - bezpieczeństwo
+### 3.6. T6 - Odebranie kodu zdjęcia - bezpieczeństwo
 **Scenariusz dotyczy:** W8  
 **Cel testu:** Testowanie bezpieczenśtwa kodu do pliku.   
 **Sposób dostępu:** Widoki wywoływane przez wybranie "SEND".  
@@ -114,7 +114,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 #### Odpowiedź systemu:  
 1. Zaszyfrowanie wygenerowanego kodu.
 
-### 3.9. T9 - Pomiar szykbości aplikacji
+### 3.7. T7 - Pomiar szykbości aplikacji
 **Scenariusz dotyczy:** W8  
 **Cel testu:** Testowanie szybkości aplikacji.   
 **Sposób dostępu:** Widoki wywoływane przez wybranie z kolejnych zakładek.  
