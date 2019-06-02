@@ -40,8 +40,7 @@ Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telef
 Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się wiedzą.
 
 ### 2.2. Diagram czynności UML
-![Use cases diagram](/documentation/activity_diagram.png)
-
+![Use cases diagram](/documentation/diagram.png)
 ### 2.3. Diagram komponentów i wdrożenia
 ![Use cases diagram](/documentation/components_diagram.png)
 
