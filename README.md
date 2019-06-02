@@ -33,6 +33,8 @@ Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telef
 
 **W8.** Jako użytkownik systemu FileCrossbar, [kto] chcę aby kod dostępu do pliku został zaszyfrowany [co] aby zapobiegać kradzieży danych [dlaczego].
 
+**W9**. Użytkownik aplikacji FileCrossbar [kto] we wszystkich zakładkach aplikacji [gdzie] sprawnie ładuję dane(do 1s)[co].
+
 ![Use cases diagram](/documentation/activity_schema.png)
 
 ## 2. Projekt
@@ -46,131 +48,80 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 
 
 ## 3. Scenariusze testów - testy akceptacyjne
-### 3.1. T1 - Instalacja aplikacji
-**Scenariusz dotyczy:** W1  
-**Cel testu:** Testowanie poprawnego pobierania oraz instalowania aplikacji TricictyTravel na urządzeniu mobilnym.  
-**Sposób dostępu:** Widok wywoływany.  
+
+### 3.1. T1 - Udostępnienie zdjęcia - wybór zdjęcia
+**Scenariusz dotyczy:** W1 
+**Cel testu:** Testowanie możliwości udostępnienia zdjęcia.  
+**Sposób dostępu:** Widok wywoływany poprzez wybranie z menu "SEND".
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
-1. Wyszukanie aplikacji TricityTravel w sklepie Google Play i klinkięcie przycisku pobierz.
-
+1. Wybranie przycisku "CHOOSE FILES".
+2. Wybranie zdjęcia.
 #### Odpowiedź systemu:  
-1. Urządzenie mobilne pobierze aplikacje.
-2. Urządzenie mobilne poinformuję nas o zainstalowaniu aplikacji.
+1. Poprawnie załdowane zdjęcie.
 
-### 3.2. T2 - Personalizacja ustawień - pogoda
+### 3.2. T2 - Udostępnienie zdjęcia - kod zdjęcia
 **Scenariusz dotyczy:** W2  
-**Cel testu:** Testowanie personalizacji ustawień dotyczących pogody.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z menu "Ustawienia"  
+**Cel testu:** Testowanie otrzymania kodu zdjęcia.
+**Sposób dostępu:** Widok wywoływany poprzez wybranie przycisku "CHOOSE FILES" i wybraniu zdjęcia.
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
-1. Wpisanie w pole tekstowe nazwy miasta.
-2. Wybranie przycisku "Zapisz".
+1. Wybranie przycisku "SUBMIT".
 #### Odpowiedź systemu:  
-1. Poprawne wyświetlenie pogdoy dla wybranego miasta w zakładce "Pogoda".
+1. Poprawne wysłanie zdjęcia, oraz otrzymanie wygenerowanego kodu.
 
-### 3.3. T3 - Personalizacja ustawień - transport publiczny
-**Scenariusz dotyczy:** W2  
-**Cel testu:** Testowanie personalizacji ustawień dotyczących transportu publicznego.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z menu "Ustawienia"  
+### 3.3. T3 - Odebranie zdjęcia 
+**Scenariusz dotyczy:** W3
+**Cel testu:**  Testowanie odbioru udostępnionego zdjęcia.
+**Sposób dostępu:** Widok wywoływany poprzez wybranie "RECIVE". 
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
-1. Wybranie przycisku "Edytuj listę linii".
-2. Wybranie przycisku "Dodaj" obok wybranego przystanku.
-3. Zaznaczenie checkboxem linii, które chcemy dodać do swoich ustawień.
-4. Wybranie przycisku "Zapisz".
+1. Wpisanie sześcio cyfrowego kodu.
+2. Wybranie przycisku "SUBMIT".
 #### Odpowiedź systemu:  
-1. Wyświetlenie listy przystanków.
-2. Dodanie przystanku do listy.
+1. Wyświetlenie zdjęcia gotowego do pobrania.
 
-### 3.4. T4 - Personalizacja ustawień - tagi
-**Scenariusz dotyczy:** W2  
-**Cel testu:**  Testowanie ustawienia tagów do poboru informacji z Trojmiasto.pl
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z menu "Ustawienia".  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Wpisanie tagu w pole tekstowe.
-2. Naciśnięcie enter na klawiaturze ekranowej.
-#### Odpowiedź systemu:  
-Tag wyświetla się poniżej pola tekstowego.
-
-### 3.5. T5 - Wyświetlenie czasu dojazdu do punktu docelowego
-**Scenariusz dotyczy:** W3  
-**Cel testu:** Testowanie wyświetlania czasu dojazdu do punktu docelowego dla podanych danych.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Samochód"  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Wpisanie punktu początkowego w pole tekstowe.
-2. Wpisanie punktu docelowego w pole tekstowe.
-3. Wybranie przycisku "Czas przejazdu"
-#### Odpowiedź systemu:  
-1. Wyświetlenie informacji na temat czasu dojazdu.
-
-### 3.6. T6 - Usunięcie przystanku z listy
+### 3.4. T4 - Odebranie zdjęcia - pobranie
 **Scenariusz dotyczy:** W4  
-**Cel testu:** Testowanie funkcjonalności usuwania przystanków z listy zapisanych w ustawieniach.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Transport publiczny".  
+**Cel testu:** Testowanie pobrania zdjęcia.
+**Sposób dostępu:** Widok wywoływany poprzez wpisanie kodu.
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
-1. Naciśnięcie i przytrzymanie na wybranym przystaku.  
-2. Wybranie opcji Tak w celu usunięcia przystanku z listy.
+1. Wybranie zdjęcia.
+2. Wybranie lokalizacji dla zdjęcia
 #### Odpowiedź systemu:  
-1. Aplikacjia usunie przystanek z listy.  
+1. Pobranie zdjęcia w wybrane miejsce.
 
-### 3.7. T7 - Negacja usunięcia przystanku z listy
-**Scenariusz dotyczy:** W4  
-**Cel testu:** Testowanie funkcjonalności usuwania przystanków z listy zapisanych w ustawieniach.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Transport publiczny".  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Naciśnięcie i przytrzymanie na wybranym przystaku.  
-2. Wybranie opcji Nie w celu usunięcia przystanku z listy.
-#### Odpowiedź systemu:  
-1. Aplikacjia nie usunie przystanku z listy.  
-
-
-### 3.8. T8 - Wyświetlenie rzeczywistych czasów przyjazdu
-**Scenariusz dotyczy:** W4  
-**Cel testu:** Testowanie funkcjonalności wyświetlenia rzeczywistych czasów przyjazdu danego pojazdu.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Transport publiczny".  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Kliknięcie na wybrany przystanek.  
-2. Przeciągnięcie palcem w dół - odświeżenie widoku.
-#### Odpowiedź systemu:  
-1. Odświeżenie listy linii.
-2. Wyświetlenie rzeczywistych czasów przyjazdów(opóźnienie - kolor czerwony, punktualny - kolor zielony, przed czasem - kolor pomarańczowy).
-
-### 3.9. T9 - Wyświetlenie informacji pogodowych
-**Scenariusz dotyczy:** W5  
-**Cel testu:** Testowanie funkcjonalności wyświetlenia informacji pogodowych.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Pogoda".  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Kliknięcie przycisku "Odśwież" - odświeżenie danych.
-#### Odpowiedź systemu:  
-1. Wyświetlenie aktualnych danych pogodowych.
-
-### 3.10. T10 - Wyświetlenie raportu Trójmiasto
-**Scenariusz dotyczy:** W6  
-**Cel testu:** Testowanie funkcjonalności wyświetlenia Raportu Trójmiasto.  
-**Sposób dostępu:** Widok wywoływany poprzez wybranie z dolnego menu zakladki "Raport".  
-**Scenariusz (kroki testowe):**   
-#### Akcje użytkownika:  
-1. Brak.
-#### Odpowiedź systemu:  
-1. Wyświetlenie listy nagłówków z Raportu Trójmiasto.
-
-### 3.11. T11 - Pomiar szykbości aplikacji
+### 3.7. T7 - Udostępnionie zdjęcia - bezpieczeństwo
 **Scenariusz dotyczy:** W7  
-**Cel testu:** Testowanie szybkości aplikacji.   
-**Sposób dostępu:** Widoki wywoływane przez wybranie z dolnego menu kolejnych zakładek.  
+**Cel testu:** Testowanie bezpieczenśtwa udostępnionego pliku.   
+**Sposób dostępu:** Widoki wywoływane przez wybranie "SEND".  
 **Scenariusz (kroki testowe):**   
 #### Akcje użytkownika:  
-1. Wybranie zakładki "Pogoda".
-1. Wybranie zakładki "Transport publiczny".
-1. Wybranie zakładki "Samochód".
-1. Wybranie zakładki "Raport".
+1. Wybranie zdjęcia.
+2. Wybranie przycisku "SUBMIT".
+#### Odpowiedź systemu:  
+1. Po 24 godzinach od udostępnienia, dany plik zostaje usunięty.
+
+### 3.8. T8 - Odebranie kodu zdjęcia - bezpieczeństwo
+**Scenariusz dotyczy:** W8  
+**Cel testu:** Testowanie bezpieczenśtwa kodu do pliku.   
+**Sposób dostępu:** Widoki wywoływane przez wybranie "SEND".  
+**Scenariusz (kroki testowe):**   
+#### Akcje użytkownika:  
+1. Wybranie zdjęcia.
+2. Wybranie przycisku "SUBMIT".
+#### Odpowiedź systemu:  
+1. Zaszyfrowanie wygenerowanego kodu.
+
+### 3.9. T9 - Pomiar szykbości aplikacji
+**Scenariusz dotyczy:** W8  
+**Cel testu:** Testowanie szybkości aplikacji.   
+**Sposób dostępu:** Widoki wywoływane przez wybranie z kolejnych zakładek.  
+**Scenariusz (kroki testowe):**   
+#### Akcje użytkownika:  
+1. Wybranie zakładki "SEND".
+2. Wybranie zakładki "RECIVE".
 #### Odpowiedź systemu:  
 1. Subiektywnie szybkie (do 1s) wyświetlenie widoku.
 
