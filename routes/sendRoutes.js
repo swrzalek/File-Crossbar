@@ -9,6 +9,16 @@ var firebase = require('firebase');
 var request = require('request');
 const fs = require('fs');
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
+// Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
+
+
 router.get('/', (req, res) => res.render('send.html'));
 /*
  * Respond to GET requests to /sign-s3.
@@ -138,14 +148,9 @@ router.post('/ionicImageUpload',upload.single('file'), (req,res,next) => {
                     });
                 }
                 writeUserData(md5_code,data.Location);
-                const path = './temp/' + fileName;
+          
 
-                try {
-                    fs.unlinkSync(path)
-                    //file removed
-                } catch(err) {
-                    console.error(err)
-                }
+
             });
 
         });

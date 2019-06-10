@@ -20,6 +20,11 @@ app.use('/css', express.static(__dirname + '/css'));
 app.use(bodyParser.json());                                 // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));         // for parsing application/x-www-form-urlencoded
 app.engine('html', require('ejs').renderFile);      // registers the embedded template engine
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 /* Routes */
 const send = require('./routes/sendRoutes')
 const receive = require('./routes/receiveRoutes')
