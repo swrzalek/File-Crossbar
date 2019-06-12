@@ -8,14 +8,15 @@
 Nazwa ogólna: FileCrossbar - instant upload service 
 Nazwa krótka: FileCross
 
-#### 1.1.2. Uczestnicy
-1. Sebastian Wrzalek
-2. Piotr Gambowski
-3. Mateusz Arendarski
-
 #### 1.1.3. Charakterystyka
 Aplikacja wieloplatformowa służąca do łatwego udostępniania plików z telefonu oraz przeglądarki bez konieczności zakładania konta.
 
+### 1.1.4 Działanie
+
+[![Watch the video](https://i.imgur.com/34jY80d.png)](https://webm.red/5fu1)
+
+### 1.1.5 Live Demo
+https://file-crossbar.herokuapp.com/
 ###  1.2. Specyfikacja właściwa - historyjki użytkowników
 
 #### 1.2.1 Wymagania Funkcjonalne
@@ -48,8 +49,7 @@ Prowadzący ma prawo przekazywać projekt innym studentom w celu dzielenia się 
 
 ### 2.2. Diagram czynności UML
 ![Use cases diagram](/documentation/diagramv3.png)
-### 2.3. Diagram komponentów i wdrożenia
-![Use cases diagram](/documentation/components_diagram.png)
+
 
 
 ## 3. Scenariusze testów - testy akceptacyjne
