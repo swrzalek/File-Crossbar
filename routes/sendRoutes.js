@@ -74,90 +74,9 @@ router.post('/getCode', (req, res) => {
     writeUserData(md5_code, link);
 })
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './temp');
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        var filetype = '';
-        if(file.mimetype === 'image/gif') {
-            filetype = 'gif';
-        }
-        if(file.mimetype === 'image/png') {
-            filetype = 'png';
-        }
-        if(file.mimetype === 'image/jpeg') {
-            filetype = 'jpg';
-        }
-        cb(null, 'image-' + Date.now() + '.' + filetype);
-    }
-});
-var upload = multer({storage: storage});
-router.post('/ionicImageUpload',upload.single('file'), (req,res,next) => {
-    const s3 = new aws.S3();
-    const fileName = req.file.filename;
-    const fileType = req.file.mimetype;
-    const s3Params = {
-        Bucket: S3_BUCKET,
-        Key: fileName,
-        Expires: 60,
-        ContentType: fileType,
-        ACL: 'public-read'
-    };
-    s3.getSignedUrl('putObject', s3Params, (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.end();
-        }
-        console.log(data)
-        const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        };
-
-        fs.readFile('./temp/' + fileName, function (err, data) {
-            if (err) { throw err; }
-        console.log(data);
-            const s3Params = {
-                Bucket: S3_BUCKET,
-                Key: fileName,
-                Body: JSON.stringify(data,null,2)
-            };
-            const s3 = new aws.S3();
-            s3.upload(s3Params, function(s3Err, data) {
-                if (s3Err) throw s3Err
-                console.log(`File uploaded successfully at ${data.Location}`)
-                // HERE IS SOMETHING TO BE FIXED
-                const gen = rn.generator({
-                    min: 100000
-                    , max: 999999
-                    , integer: true
-                })
-                const rm = gen();
-                console.log(rm.toString());
-                res.json({ "random": rm });
-                const md5_code = md5(rm.toString());
-                const link = req.body.link;
-                console.log("kod md5 wygenerowany: " + md5_code)
-                // handle sent data from frontend !!!LINK!!!;
-
-                function writeUserData(code , link) {
-                    firebase.database().ref('crossbarfile/' + code).set({
-                        link_address:link
-                    });
-                }
-                writeUserData(md5_code,data.Location);
-          
 
 
-            });
 
-        });
-
-
-    });
-});
 
 
 module.exports = router

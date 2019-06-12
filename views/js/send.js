@@ -4,22 +4,7 @@ var $fileInput = $('.file-input');
 var $droparea = $('.file-drop-area');
 var request;
 
-//$(document).ready(function () {
-//    $(".submit").click(function () {
-//        $(".submit").addClass("loading");
-//        setTimeout(function () {
-//            $(".submit").addClass("hide-loading");
-//            // For failed icon just replace ".done" with ".failed"
-//            $(".done").addClass("finish");
-//        }, 3000);
-//        setTimeout(function () {
-//            $(".submit").removeClass("loading");
-//            $(".submit").removeClass("hide-loading");
-//            $(".done").removeClass("finish");
-//            $(".failed").removeClass("finish");
-//        }, 5000);
-//    })
-//});
+
 // Submiting
 $("#sumbit").click(function () {
     var filesCount = $("#file-input")[0].files.length;
@@ -57,6 +42,7 @@ $("#sumbit").click(function () {
     }
 });
 function DOMafterSubmitSuccess() {
+
     $(".file-drop-area").hide();
     $("#code").show();
     $("#next-file").show();
@@ -68,6 +54,7 @@ $("#next-file").click(function () {
     $("#code").hide();
     $("#next-file").hide();
     $("#file-input").val('');
+    $('.fake-btn').text('SELECT FILE');
 
 });
 // highlight drag area
@@ -80,6 +67,7 @@ $fileInput.on('dragleave blur drop', function () {
 });
 // change inner text
 $fileInput.on('change', function () {
+    $("#overlay").fadeIn(300);
     var filesCount = $(this)[0].files.length;
     var $textContainer = $('.fake-btn');
 
@@ -102,8 +90,10 @@ function uploadFile(file, signedRequest, url) {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
 
-                toastr.success("up")
+
                 $("#sumbit").show();
+                $("#overlay").fadeOut(300);
+
 
             }
             else {
@@ -129,6 +119,7 @@ function getSignedRequest(file) {
                 const response = JSON.parse(xhr.responseText);
                 uploadFile(file, response.signedRequest, response.url);
                 document.getElementById('url').value = "https://filecrosbarr.s3.eu-west-2.amazonaws.com/" + file.name;
+
             }
             else {
                 toastr.error('Could not get signed URL.');

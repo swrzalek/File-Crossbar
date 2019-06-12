@@ -36,5 +36,5 @@ app.get("/", (req, res) => {
     res.render("home.html")
 })
 
-app.listen(process.env.PORT || 3000, console.log('Server Started at: ', Date.now()));
+app.listen(process.env.PORT || 3000, console.log('Server Started at: ', Date.now() , 'on: ' , process.env.PORT));
 aws.config.region = 'eu-west-2';
