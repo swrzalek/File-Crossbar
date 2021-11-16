@@ -7,7 +7,7 @@
     "devserver": "nodemon app.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.423.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "ejs": "2.x",
