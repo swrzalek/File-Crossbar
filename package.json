@@ -13,7 +13,7 @@
     "ejs": "2.x",
     "express": "4.x",
     "firebase": "5.9.1-0",
-    "firebase-admin": "^7.1.1",
+    "firebase-admin": "^11.4.1",
     "md5": "^2.2.1",
     "multer": "^1.4.1",
     "random-number": "0.0.9",
